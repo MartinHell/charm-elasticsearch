@@ -1,32 +1,32 @@
 #!/bin/sh
 # Adapted from http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html
 
-ES_VERSION=0.18.7
+VERSION=$(config-get version)
 
 apt-get update && apt-get -y upgrade
 
 juju-log "Check if we've installed elasticsearch before"
 
-if [ ! -f "/opt/elasticsearch-$ES_VERSION/bin/elasticsearch" ]; then
+if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
 	juju-log "Installing OpenJDK"
-	apt-get install -y default-jre charm-helper-sh
+	apt-get install -y default-jre-headless wget
 
   cd /opt
 
 	juju-log "Downloading elasticsearch"
-  wget "https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-$ES_VERSION.tar.gz"
-  tar xzvf elasticsearch-$ES_VERSION.tar.gz
-  ln -s elasticsearch-$ES_VERSION elasticsearch
-  rm elasticsearch-$ES_VERSION.tar.gz
+  wget "https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-$VERSION.tar.gz"
+  tar xzvf elasticsearch-$VERSION.tar.gz
+  ln -s elasticsearch-$VERSION elasticsearch
+  rm elasticsearch-$VERSION.tar.gz
 
 	juju-log "Installing service wrapper"
   wget http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master -O- | tar -xz
   mv *servicewrapper*/service elasticsearch/bin/
   rm -Rf *servicewrapper*
 
-  juju-log "Setup ElasticSearch as a service"
+  juju-log "Setup elasticsearch as a service"
   elasticsearch/bin/service/elasticsearch install
 
-  juju-log "Update ElasticSearch config"
+  juju-log "Update elasticsearch config"
   sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" elasticsearch/bin/service/elasticsearch.conf
 fi
