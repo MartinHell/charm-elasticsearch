@@ -1,0 +1,13 @@
+name: elasticsearch
+summary: Open Source (Apache 2), Distributed, RESTful, Search Engine built on top of Apache Lucene
+description: |
+  <Multi-line description here>
+provides:
+  relation-name:
+    interface: interface-name
+requires:
+  relation-name:
+    interface: interface-name
+peers:
+  relation-name:
+    interface: interface-name
