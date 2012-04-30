@@ -3,11 +3,8 @@ summary: Open Source (Apache 2), Distributed, RESTful, Search Engine built on to
 description: |
   <Multi-line description here>
 provides:
-  relation-name:
-    interface: interface-name
-requires:
-  relation-name:
-    interface: interface-name
+  rest:
+    interface: elasticsearch
 peers:
-  relation-name:
-    interface: interface-name
+  cluster:
+    interface: elasticsearch-cluster
