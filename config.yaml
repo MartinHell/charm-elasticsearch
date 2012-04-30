@@ -4,3 +4,11 @@ options:
     default: "0.19.2"
     description: |
       This sets the elasticsearch version number that will be used.
+  cluster-name:
+    type: string
+    description: |
+      This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
+  bucket-name:
+    type: string
+    description: |
+      This sets the s3 bucket name for the elasticsearch s3 gateway.
