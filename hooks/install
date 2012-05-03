@@ -21,7 +21,7 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
   rm elasticsearch-$VERSION.tar.gz
 
 	juju-log "Installing service wrapper"
-  wget http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master -O- | tar -xz
+  wget -q http://github.com/elasticsearch/elasticsearch-servicewrapper/tarball/master -O- | tar -xz
   mv *servicewrapper*/service elasticsearch/bin/
   rm -Rf *servicewrapper*
 

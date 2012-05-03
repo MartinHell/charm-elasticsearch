@@ -5,3 +5,6 @@ description: |
 provides:
   rest:
     interface: elasticsearch
+peers:
+  cluster:
+     interface: elasticsearch-cluster
