@@ -25,10 +25,15 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
   mv *servicewrapper*/service elasticsearch/bin/
   rm -Rf *servicewrapper*
 
+  cd elasticsearch
+
   juju-log "Setup elasticsearch as a service"
-  elasticsearch/bin/service/elasticsearch install
+  bin/service/elasticsearch install
 
   juju-log "Update elasticsearch config"
-  sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" elasticsearch/bin/service/elasticsearch.conf
-  sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" elasticsearch/config/elasticsearch.yml
+  sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" bin/service/elasticsearch.conf
+  sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" config/elasticsearch.yml
+
+  juju-log "Install elasticsearch aws plugin"
+  bin/plugin -install elasticsearch/elasticsearch-cloud-aws/1.4.0 > /dev/null
 fi

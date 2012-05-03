@@ -3,4 +3,5 @@
 # Note that currently this is run directly after install
 # i.e. 'service apache2 start'
 
+open-port 9200
 /opt/elasticsearch/bin/service/elasticsearch start
