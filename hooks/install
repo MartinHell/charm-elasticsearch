@@ -5,6 +5,7 @@ VERSION=$(config-get version)
 CLUSTER_NAME=$(config-get cluster-name)
 ACCESS_KEY=$(config-get access-key)
 SECRET_KEY=$(config-get secret-key)
+REGION=$(config-get region)
 
 apt-get update && apt-get -y upgrade
 
@@ -48,6 +49,7 @@ cloud:
   aws:
     access_key: $ACCESS_KEY
     secret_key: $SECRET_KEY
+cloud.aws.region: $REGION
 
 discovery:
   type: ec2

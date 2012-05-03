@@ -10,13 +10,18 @@ options:
     description: |
       This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
   access-key:
+    type: string
     description: |
       Access key for EC2.
-    type: string
   secret-key:
+    type: string
     description: |
       Secret key for EC2.
+  region:
     type: string
+    default: "us-east"
+    description: |
+      This sets the region that will be used for discovery on ec2
   bucket-name:
     type: string
     description: |
