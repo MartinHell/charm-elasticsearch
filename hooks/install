@@ -36,8 +36,21 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
   sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" bin/service/elasticsearch.conf
   sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" config/elasticsearch.yml
 
-  if [ ! -z "$ACCESS_KEY" && ! -z "$SECRET_KEY" ]; then
+  if [ ! -z "$ACCESS_KEY" ] && [ ! -z "$SECRET_KEY" ]; then
     juju-log "Install elasticsearch aws plugin"
     bin/plugin -install elasticsearch/elasticsearch-cloud-aws/1.4.0 > /dev/null
+
+    juju-log "Update elastisearch config for ec2"
+    cat >> config/elasticsearch.yml << EOF
+################################ EC2 Discovery ################################
+
+cloud:
+  aws:
+    access_key: $ACCESS_KEY
+    secret_key: $SECRET_KEY
+
+discovery:
+  type: ec2
+EOF
   fi
 fi
