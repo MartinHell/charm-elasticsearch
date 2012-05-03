@@ -2,6 +2,7 @@
 # Adapted from http://www.elasticsearch.org/tutorials/2010/07/01/setting-up-elasticsearch.html
 
 VERSION=$(config-get version)
+CLUSTER_NAME=$(config-get cluster-name)
 
 apt-get update && apt-get -y upgrade
 
@@ -14,7 +15,7 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
   cd /opt
 
 	juju-log "Downloading elasticsearch"
-  wget "https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-$VERSION.tar.gz"
+  wget -q "https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-$VERSION.tar.gz"
   tar xzvf elasticsearch-$VERSION.tar.gz
   ln -s elasticsearch-$VERSION elasticsearch
   rm elasticsearch-$VERSION.tar.gz
@@ -29,4 +30,5 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
 
   juju-log "Update elasticsearch config"
   sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" elasticsearch/bin/service/elasticsearch.conf
+  sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" elasticsearch/config/elasticsearch.yml
 fi

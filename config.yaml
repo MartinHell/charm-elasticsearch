@@ -6,6 +6,7 @@ options:
       This sets the elasticsearch version number that will be used.
   cluster-name:
     type: string
+    default: "elasticsearch"
     description: |
       This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
   bucket-name:
