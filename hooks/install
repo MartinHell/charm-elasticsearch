@@ -3,6 +3,8 @@
 
 VERSION=$(config-get version)
 CLUSTER_NAME=$(config-get cluster-name)
+ACCESS_KEY=$(config-get access-key)
+SECRET_KEY=$(config-get secret-key)
 
 apt-get update && apt-get -y upgrade
 
@@ -34,6 +36,8 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
   sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" bin/service/elasticsearch.conf
   sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" config/elasticsearch.yml
 
-  juju-log "Install elasticsearch aws plugin"
-  bin/plugin -install elasticsearch/elasticsearch-cloud-aws/1.4.0 > /dev/null
+  if [ ! -z "$ACCESS_KEY" && ! -z "$SECRET_KEY" ]; then
+    juju-log "Install elasticsearch aws plugin"
+    bin/plugin -install elasticsearch/elasticsearch-cloud-aws/1.4.0 > /dev/null
+  fi
 fi
