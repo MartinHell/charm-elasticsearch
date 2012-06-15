@@ -11,4 +11,4 @@ juju-log Relation members:
 relation-list
 
 # Set hostname for rest client
-relation-set hostname=$(unit-get private-address)
+relation-set hostname=$(unit-get private-address) cluster-name=$(config-get cluster-name)
