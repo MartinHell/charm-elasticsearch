@@ -1,7 +1,7 @@
 options:
   version:
     type: string
-    default: "0.19.2"
+    default: "0.19.4"
     description: |
       This sets the elasticsearch version number that will be used.
   cluster-name:

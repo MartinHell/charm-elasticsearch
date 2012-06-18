@@ -4,11 +4,5 @@
 # This script should be idempotent.
 juju-log $JUJU_REMOTE_UNIT modified its settings
 
-juju-log Relation settings:
-relation-get
-
-juju-log Relation members:
-relation-list
-
 # Set hostname for rest client
 relation-set hostname=$(unit-get private-address) cluster-name=$(config-get cluster-name)
