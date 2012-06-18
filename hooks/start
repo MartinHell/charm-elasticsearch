@@ -4,4 +4,5 @@
 # i.e. 'service apache2 start'
 
 open-port 9200
+open-port 9300
 /opt/elasticsearch/bin/service/elasticsearch start

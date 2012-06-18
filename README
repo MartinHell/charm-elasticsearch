@@ -23,6 +23,7 @@ Once the unit has started you can test if everything's working by using curl as 
 which should give you a similar json response.
 
   $ curl -XGET 'http://<ec2 dns or ip of a node>:9200/_cluster/health?pretty=true'
+
   {
     "cluster_name" : "es-demo",
     "status" : "green",

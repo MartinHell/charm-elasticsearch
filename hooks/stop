@@ -7,4 +7,5 @@
 # rm /srv/webroot/server-live.txt && sleep 30
 
 close-port 9200
+close-port 9300
 /opt/elasticsearch/bin/service/elasticsearch stop
