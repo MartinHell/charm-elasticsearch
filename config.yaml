@@ -9,6 +9,12 @@ options:
     default: "elasticsearch"
     description: |
       This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
+  bootstrap-class:
+    type: string
+    default: "org.elasticsearch.bootstrap.ElasticSearchF"
+    description: |
+      Class used by elasticsearch service wrapper, should be org.elasticsearch.bootstrap.ElasticSearch for versions
+      less than or equal to 0.18.7
   access-key:
     type: string
     description: |

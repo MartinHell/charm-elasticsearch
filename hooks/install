@@ -3,6 +3,7 @@
 
 VERSION=$(config-get version)
 CLUSTER_NAME=$(config-get cluster-name)
+BOOTSTRAP_CLASS=$(config-get bootstrap-class)
 ACCESS_KEY=$(config-get access-key)
 SECRET_KEY=$(config-get secret-key)
 REGION=$(config-get region)
@@ -35,6 +36,7 @@ if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
 
   juju-log "Update elasticsearch config"
   sed -i "s/<Path to ElasticSearch Home>/\/opt\/elasticsearch/g" bin/service/elasticsearch.conf
+  sed -i "/wrapper.app.parameter.1/c wrapper.app.parameter.1=$BOOTSTRAP_CLASS" bin/service/elasticsearch.conf
   sed -i "/cluster.name:/ c\cluster.name: $CLUSTER_NAME" config/elasticsearch.yml
 
   if [ ! -z "$ACCESS_KEY" ] && [ ! -z "$SECRET_KEY" ]; then
