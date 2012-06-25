@@ -8,8 +8,6 @@ ACCESS_KEY=$(config-get access-key)
 SECRET_KEY=$(config-get secret-key)
 REGION=$(config-get region)
 
-apt-get update && apt-get -y upgrade
-
 juju-log "Check if we've installed elasticsearch before"
 
 if [ ! -f "/opt/elasticsearch-$VERSION/bin/elasticsearch" ]; then
