@@ -5,4 +5,4 @@
 juju-log $JUJU_REMOTE_UNIT modified its settings
 
 # Set hostname for rest client
-relation-set hostname=$(unit-get private-address) cluster-name=$(config-get cluster-name)
+relation-set cluster-name=$(config-get cluster-name)
