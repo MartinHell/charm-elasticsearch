@@ -1,0 +1,7 @@
+branch: lp:~michael.nelson/charm-helpers/include-relations-for-type
+destination: hooks/charmhelpers
+include:
+    - core
+    - fetch
+    - contrib.ansible|inc=*
+    - contrib.templating.contexts
