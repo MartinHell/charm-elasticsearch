@@ -12,6 +12,20 @@ You can add more units and they will discover each other and
 join the cluster.
 
 
+## Relating to the Elasticsearch cluster
+
+This charm currently provides the website http interface to the
+consuming service, ie. the private address of an elasticsearch unit. The
+consuming service can use this on the website-relation-joined
+relation to query the cluster for the list of nodes (many client
+elasticsearch apis will do this for you [1]).
+
+If it's needed, we can add an elasticsearch cluster interface that
+returns the lists of hosts in the cluster.
+
+[1] http://elasticsearch-py.readthedocs.org/en/latest/api.html#elasticsearch
+
+
 ## Discovery
 
 This charm uses unicast discovery which utilises the orchestration

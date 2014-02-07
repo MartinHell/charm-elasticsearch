@@ -10,3 +10,6 @@ subordinate: false
 peers:
   peer:
     interface: http
+provides:
+  website:
+    interface: http
