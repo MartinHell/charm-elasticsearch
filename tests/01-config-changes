@@ -12,7 +12,7 @@ d.configure('elasticsearch', config)
 
 helpers.setup_deployment(d)
 
-health = helpers.get_unit_health(d)
+health = helpers.get_cluster_health(d)
 
 cluster_name = health['cluster_name']
 
