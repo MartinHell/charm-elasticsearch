@@ -3,9 +3,9 @@
 
 cluster.name: {{ cluster_name }}
 discovery.zen.ping.multicast.enabled: false
-{% if 'cluster' in relations %}
+{% if 'peer' in relations %}
 discovery.zen.ping.unicast.hosts:
-{% for peer in relations.cluster %}
+{% for peer in relations.peer %}
   - {{ peer.private_address }}
 {% endfor %}
 {% endif %}

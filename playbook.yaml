@@ -40,7 +40,7 @@
         - Update configuration
         - Restart ElasticSearch
 
-    # XXX Testing shows that currently cluster-relation-joined is run
+    # XXX Testing shows that currently peer-relation-joined is run
     # not just when the unit joins the peer relationship, but every
     # time a new unit is added to the peer relationship. ElasticSearch
     # needs to set the existing peer hosts only when first joining the
@@ -48,7 +48,7 @@
     - name: Update config with peer hosts
       command: /usr/bin/touch {{ charm_dir }}/config-already-updated-with-peers creates={{ charm_dir }}/config-already-updated-with-peers
       tags:
-        - cluster-relation-joined
+        - peer-relation-joined
       notify:
         - Update configuration
         - Restart ElasticSearch

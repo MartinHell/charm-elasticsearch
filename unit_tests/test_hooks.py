@@ -54,7 +54,7 @@ class DefaultHooksTestCase(unittest.TestCase):
         """Most of the hooks let ansible do all the work."""
         default_hooks = [
             'config-changed',
-            'cluster-relation-joined',
+            'peer-relation-joined',
             'start',
             'stop',
         ]

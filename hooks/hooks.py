@@ -9,7 +9,7 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
     playbook_path='playbook.yaml',
     default_hooks=[
         'config-changed',
-        'cluster-relation-joined',
+        'peer-relation-joined',
         'start',
         'stop',
     ])

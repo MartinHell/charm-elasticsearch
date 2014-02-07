@@ -8,5 +8,5 @@ categories:
   - misc
 subordinate: false
 peers:
-  cluster:
+  peer:
     interface: http

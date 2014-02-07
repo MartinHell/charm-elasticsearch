@@ -19,7 +19,7 @@ of juju so that the discovery method is the same whether you deploy
 on EC2, lxc or any other cloud provider.
 
 When a new unit first joins the cluster, it will update its config
-with the other units in the cluster (via the cluster-relation-joined
+with the other units in the cluster (via the peer-relation-joined
 hook), after which ElasticSearch handles the rest.
 
 
@@ -38,3 +38,6 @@ files/elasticsearch-0.90.7.deb and it will not need to be downloaded during
 install. To make that easier, you can download the default version into 
 
     make charm-payload
+
+## TODO
+ * Add other ElasticSearch config options as needed.
