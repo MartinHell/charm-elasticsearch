@@ -6,13 +6,16 @@ import requests
 
 def check_response(response, expected_code=200):
     if response.status_code != expected_code:
-        sys.exit("Elastic search did not respond as expected. \n"
+        msg = (
+            "Elastic search did not respond as expected. \n"
             "Expected status code: %{expected_code} \n"
             "Status code: %{status_code} \n"
             "Response text: %{response_text}".format(
                 expected_code=expected_code,
                 status_code=response.status_code,
                 response_text=response.text))
+
+        amulet.raise_status(amulet.FAIL, msg=msg)
 
 
 def setup_deployment(deployment, timeout=900):
@@ -22,8 +25,6 @@ def setup_deployment(deployment, timeout=900):
         deployment.sentry.wait()
     except amulet.helpers.TimeoutError:
         amulet.raise_status(amulet.SKIP, msg="Environment wasn't setup in time")
-    except:
-        raise
 
 
 def get_unit_address(deployment, unit_number=0):
@@ -48,12 +49,3 @@ def get_index_health(deployment, index_name, unit_number=0):
     response = requests.get(addr + "/_cluster/health/" + index_name)
     check_response(response, expected_code=200)
     return response.json()
-
-
-def assert_unit_ok(deployment, unit_number=0):
-    addr = get_unit_address(d, unit_number=unit_number)
-    response = requests.get(addr + "/_nodes/process")
-    check_response(response, expected_code=200)
-    response_dict = response.json()
-    if not response_dict['ok']:
-        sys.exit("Elastic search responded with ok=%s" % response_dict['ok'])

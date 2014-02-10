@@ -17,7 +17,6 @@ health = helpers.get_cluster_health(d)
 cluster_name = health['cluster_name']
 
 if cluster_name != 'unique-name':
-    sys.exit("Expected cluster name to be 'unique-name' "
-             "but was '{}'.".format(cluster_name))
-
-print("{prog_name} successful.".format(prog_name=sys.argv[0]))
+    msg = ("Expected cluster name to be 'unique-name' "
+           "but was '{}'.".format(cluster_name))
+    amulet.raise_status(amulet.FAIL, msg=msg)

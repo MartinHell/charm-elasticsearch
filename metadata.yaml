@@ -13,3 +13,6 @@ peers:
 provides:
   website:
     interface: http
+  # 'rest' provided only for backwards compat with bash elasticsearch charm.
+  rest:
+    interface: http

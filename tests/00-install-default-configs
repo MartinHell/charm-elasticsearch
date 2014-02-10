@@ -17,7 +17,8 @@ helpers.setup_deployment(d)
 health = helpers.get_cluster_health(d, wait_for_nodes=2)
 
 if health['status'] not in ('green', 'yellow'):
-    sys.exit("Elastic Search status is %s" % health['status'])
+    msg = "Elastic Search status is %s" % health['status']
+    amulet.raise_status(amulet.FAIL, msg=msg)
 
 # Create a test index.
 elastic_0_addr = helpers.get_unit_address(d, unit_number=0)
@@ -28,6 +29,5 @@ helpers.check_response(response, expected_code=201)
 
 health = helpers.get_index_health(d, 'test')
 if health['status'] not in ('green', 'yellow'):
-    sys.exit("Elastic Search test index status is %s." % health['status'])
-
-print("{prog_name} successful.".format(prog_name=sys.argv[0]))
+    msg = "Elastic Search test index status is %s." % health['status']
+    amulet.raise_status(amulet.FAIL, msg=msg)
