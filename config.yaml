@@ -22,3 +22,9 @@ options:
       This sets the elasticsearch cluster name, which is used to discover
       and auto-join other nodes. don not change this if you want
       elasticsearch and kibana to work.
+  install-ansible-from-ppa:
+    type: boolean
+    default: true
+    description: |
+      By default ansible will be installed from the Ansible ppa. You can
+      set this to false for your deployments if you have ansible available
