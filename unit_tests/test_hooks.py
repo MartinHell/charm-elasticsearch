@@ -20,7 +20,7 @@ class InstallHookTestCase(unittest.TestCase):
         self.mock_charmhelpers = patcher.start()
         self.addCleanup(patcher.stop)
         self.mock_charmhelpers.core.hookenv.config.return_value = {
-            'install_deps_from_ppa': False,
+            'install-ansible-from-ppa': True,
         }
 
         patcher = mock.patch('charmhelpers.contrib.ansible.apply_playbook')
@@ -34,12 +34,29 @@ class InstallHookTestCase(unittest.TestCase):
         ansible.install_ansible_support.assert_called_once_with(
             from_ppa=True)
 
+    def test_no_ppa_for_ansible_support(self):
+        self.mock_charmhelpers.core.hookenv.config.return_value = {
+            'install-ansible-from-ppa': False,
+        }
+
+        hooks.execute(['install'])
+
+        ansible = self.mock_charmhelpers.contrib.ansible
+        ansible.install_ansible_support.assert_called_once_with(
+            from_ppa=False)
+
     def test_applies_install_playbook(self):
         hooks.execute(['install'])
 
         self.assertEqual([
             mock.call('playbook.yaml', tags=['install']),
         ], self.mock_apply_playbook.call_args_list)
+
+    def test_executes_preinstall(self):
+        hooks.execute(['install'])
+
+        execd = self.mock_charmhelpers.payload.execd
+        execd.execd_preinstall.assert_called_once_with()
 
 
 class DefaultHooksTestCase(unittest.TestCase):

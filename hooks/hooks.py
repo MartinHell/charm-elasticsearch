@@ -3,6 +3,7 @@
 
 import sys
 import charmhelpers.contrib.ansible
+import charmhelpers.payload.execd
 
 
 hooks = charmhelpers.contrib.ansible.AnsibleHooks(
@@ -17,8 +18,12 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
 
 @hooks.hook()
 def install():
-    """Install ansible before running the tasks tagged with 'instal'."""
-    charmhelpers.contrib.ansible.install_ansible_support(from_ppa=True)
+    """Install ansible before running the tasks tagged with 'install'."""
+    # Allow charm users to run preinstall setup.
+    charmhelpers.payload.execd.execd_preinstall()
+    config = charmhelpers.core.hookenv.config()
+    charmhelpers.contrib.ansible.install_ansible_support(
+        from_ppa=config['install-ansible-from-ppa'])
 
 
 if __name__ == "__main__":
