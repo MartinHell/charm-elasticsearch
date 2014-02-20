@@ -6,7 +6,7 @@ ES_DOWNLOAD_URL ?=https://download.elasticsearch.org/elasticsearch/elasticsearch
 
 build: sync-charm-helpers test
 
-charm-payload: files/elasticsearch-${ES_VERSION}.deb files/elasticsearch-${ES_VERSION}.deb.sha1.txt sync-charm-helpers
+pre-download-deb: files/elasticsearch-${ES_VERSION}.deb files/elasticsearch-${ES_VERSION}.deb.sha1.txt
 	@cd files && sha1sum elasticsearch-${ES_VERSION}.deb.sha1.txt --check --quiet
 
 lint:

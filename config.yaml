@@ -15,6 +15,14 @@ options:
     default: "a3ec3c05ffabf8048642aa431b675f3c132b4fae755e1b7aee0cb9fe3f2a37ba"
     description: |
       SHA256 checksum of elasticsearch download.
+  archive-package-name:
+    type: string
+    default: ""
+    description: |
+        By default, the elasticsearch deb package will be downloaded from the
+        above url, but if you specify an archive-package-name, the charm
+        will instead install the given package. You will need to ensure
+        that the package is available in any archives you have available.
   cluster-name:
     type: string
     default: "elasticsearch"

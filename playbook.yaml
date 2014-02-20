@@ -19,6 +19,7 @@
         - openjdk-7-jre-headless
       tags:
         - install
+        - upgrade-charm
       notify:
         - Restart ElasticSearch
 
@@ -29,6 +30,7 @@
       tags:
         - install
         - config-changed
+      when: archive_package_name == ""
 
     - name: Install ElasticSearch
       command: dpkg -i {{ charm_dir }}/files/elasticsearch-{{ version }}.deb
@@ -39,6 +41,18 @@
       notify:
         - Update configuration
         - Restart ElasticSearch
+      when: archive_package_name == ""
+
+    - name: Install archive elasticsearch package.
+      apt: pkg={{ archive_package_name }} state=latest update_cache=yes
+      tags:
+        - install
+        - upgrade-charm
+        - config-changed
+      notify:
+        - Update configuration
+        - Restart ElasticSearch
+      when: archive_package_name != ""
 
     # XXX Testing shows that currently peer-relation-joined is run
     # not just when the unit joins the peer relationship, but every

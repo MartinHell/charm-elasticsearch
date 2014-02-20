@@ -13,10 +13,11 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
         'peer-relation-joined',
         'start',
         'stop',
+        'upgrade-charm',
     ])
 
 
-@hooks.hook()
+@hooks.hook('install', 'upgrade-charm')
 def install():
     """Install ansible before running the tasks tagged with 'install'."""
     # Allow charm users to run preinstall setup.
