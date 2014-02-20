@@ -5,9 +5,6 @@ To deploy ElasticSearch locally:
     juju bootstrap
     juju deploy --repository=../.. local:elasticsearch
 
-Note: before this charm goes in the charm store, it'll
-need to be renamed.
-
 You can add more units and they will discover each other and
 join the cluster.
 
@@ -47,11 +44,19 @@ Run the functional tests with `juju test`.
 ## Downloading ElasticSearch
 
 By default, the charm will download (and check) the elasticsearch
-debian package during install but you can also include the package at
-files/elasticsearch-0.90.7.deb and it will not need to be downloaded during
-install. To make that easier, you can download the default version into 
+debian package during the install hook but this is not ideal in
+production environments (you don't want the deploy to fail because a
+third-party site is down). For this reason, the charm provides two other
+methods for installing elasticsearch:
 
-    make charm-payload
+First, you can ensure the versioned deb package as available at
+files/elasticsearch-0.90.7.deb as part of your build step, and it will not need
+to be downloaded during install. To make that easier, you can download the
+default version into 
 
-## TODO
- * Add other ElasticSearch config options as needed.
+    make pre-download-deb
+
+The other alternative is to ensure a relevant debian package is available
+in an archive that you've configured via the execd_preinstall in the install
+hook., and set the archive-package-name config option. This will ensure that
+no download is attempted other than from your archive.
