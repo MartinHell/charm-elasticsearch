@@ -48,6 +48,7 @@
       tags:
         - install
         - upgrade-charm
+        - config-changed
       notify:
         - Update configuration
         - Restart ElasticSearch
