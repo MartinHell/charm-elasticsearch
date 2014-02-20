@@ -2,3 +2,4 @@ bin/*
 files/*
 revision
 exec.d
+local.yaml
