@@ -24,13 +24,13 @@
         - Restart ElasticSearch
 
     - name: Install archive elasticsearch package.
-      apt: pkg={{ archive-package-name }} state=latest update_cache=yes
+      apt: pkg={{ archive_package_name }} state=latest update_cache=yes
       tags:
         - install
         - upgrade-charm
       notify:
         - Restart ElasticSearch
-      when: archive-package-name != ""
+      when: archive_package_name != ""
 
 
     - name: Download ElasticSearch package if necessary.
@@ -40,7 +40,7 @@
       tags:
         - install
         - config-changed
-      when: archive-package-name == ""
+      when: archive_package_name == ""
 
     - name: Install ElasticSearch
       command: dpkg -i {{ charm_dir }}/files/elasticsearch-{{ version }}.deb
