@@ -52,11 +52,12 @@ methods for installing elasticsearch:
 First, you can ensure the versioned deb package as available at
 files/elasticsearch-0.90.7.deb as part of your build step, and it will not need
 to be downloaded during install. To make that easier, you can download the
-default version into 
+default version into
 
     make pre-download-deb
 
 The other alternative is to ensure a relevant debian package is available
 in an archive that you've configured via the execd_preinstall in the install
-hook., and set the archive-package-name config option. This will ensure that
-no download is attempted other than from your archive.
+hook, and set the archive-package-name config option. This will ensure that
+no download is required either during a build phase or the install hook,
+other than from your archive.
