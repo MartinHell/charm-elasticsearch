@@ -19,8 +19,19 @@
         - openjdk-7-jre-headless
       tags:
         - install
+        - upgrade-charm
       notify:
         - Restart ElasticSearch
+
+    - name: Install archive elasticsearch package.
+      apt: pkg={{ archive-package-name }} state=latest update_cache=yes
+      tags:
+        - install
+        - upgrade-charm
+      notify:
+        - Restart ElasticSearch
+      when: archive-package-name != ""
+
 
     - name: Download ElasticSearch package if necessary.
       get_url: url={{ downloadurl }}/elasticsearch-{{ version }}.deb
@@ -29,6 +40,7 @@
       tags:
         - install
         - config-changed
+      when: archive-package-name == ""
 
     - name: Install ElasticSearch
       command: dpkg -i {{ charm_dir }}/files/elasticsearch-{{ version }}.deb
