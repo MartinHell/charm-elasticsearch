@@ -23,16 +23,6 @@
       notify:
         - Restart ElasticSearch
 
-    - name: Install archive elasticsearch package.
-      apt: pkg={{ archive_package_name }} state=latest update_cache=yes
-      tags:
-        - install
-        - upgrade-charm
-      notify:
-        - Restart ElasticSearch
-      when: archive_package_name != ""
-
-
     - name: Download ElasticSearch package if necessary.
       get_url: url={{ downloadurl }}/elasticsearch-{{ version }}.deb
                dest={{ charm_dir }}/files/elasticsearch-{{ version }}.deb
@@ -51,6 +41,17 @@
       notify:
         - Update configuration
         - Restart ElasticSearch
+      when: archive_package_name == ""
+
+    - name: Install archive elasticsearch package.
+      apt: pkg={{ archive_package_name }} state=latest update_cache=yes
+      tags:
+        - install
+        - upgrade-charm
+      notify:
+        - Update configuration
+        - Restart ElasticSearch
+      when: archive_package_name != ""
 
     # XXX Testing shows that currently peer-relation-joined is run
     # not just when the unit joins the peer relationship, but every
