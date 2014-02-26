@@ -13,6 +13,16 @@
 
   tasks:
 
+    - name: Add extra apt archive.
+      tags:
+        - install
+        - upgrade-charm
+        - config-changed
+      apt_repository:
+        repo: "{{ extra_apt_repository }}"
+        state: present
+      when: extra_apt_repository != ""
+
     - name: Install required packages.
       apt: pkg={{ item }} state=latest update_cache=yes
       with_items:

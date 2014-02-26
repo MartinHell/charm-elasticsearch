@@ -21,8 +21,14 @@ options:
     description: |
         By default, the elasticsearch deb package will be downloaded from the
         above url, but if you specify an archive-package-name, the charm
-        will instead install the given package. You will need to ensure
-        that the package is available in any archives you have available.
+        will instead install the given package using apt. You will need to ensure
+        that the package is available in any archives you have available,
+        possibly using the extra_archive option below.
+  extra-apt-repository:
+    type: string
+    default: ""
+    description: |
+      A deb-line for an extra apt archive to add to the system during install.
   cluster-name:
     type: string
     default: "elasticsearch"
