@@ -13,56 +13,24 @@
 
   tasks:
 
-    - name: Add extra apt archive.
+    - name: Add apt archive.
       tags:
         - install
         - upgrade-charm
         - config-changed
       apt_repository:
-        repo: "{{ extra_apt_repository }}"
+        repo: "{{ apt_repository }}"
         state: present
-      when: extra_apt_repository != ""
+      when: apt_repository != ""
 
     - name: Install required packages.
       apt: pkg={{ item }} state=latest update_cache=yes
       with_items:
         - openjdk-7-jre-headless
+        - elasticsearch
       tags:
         - install
         - upgrade-charm
-      notify:
-        - Restart ElasticSearch
-
-    - name: Download ElasticSearch package if necessary.
-      get_url: url={{ downloadurl }}/elasticsearch-{{ version }}.deb
-               dest={{ charm_dir }}/files/elasticsearch-{{ version }}.deb
-               sha256sum={{ checksum }}
-      tags:
-        - install
-        - config-changed
-      when: archive_package_name == ""
-
-    - name: Install ElasticSearch
-      command: dpkg -i {{ charm_dir }}/files/elasticsearch-{{ version }}.deb
-               creates=/usr/share/elasticsearch/lib/elasticsearch-{{ version }}.jar
-      tags:
-        - install
-        - config-changed
-      notify:
-        - Update configuration
-        - Restart ElasticSearch
-      when: archive_package_name == ""
-
-    - name: Install archive elasticsearch package.
-      apt: pkg={{ archive_package_name }} state=latest update_cache=yes
-      tags:
-        - install
-        - upgrade-charm
-        - config-changed
-      notify:
-        - Update configuration
-        - Restart ElasticSearch
-      when: archive_package_name != ""
 
     # XXX Testing shows that currently peer-relation-joined is run
     # not just when the unit joins the peer relationship, but every
