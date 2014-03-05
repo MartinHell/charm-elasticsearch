@@ -43,21 +43,7 @@ Run the functional tests with `juju test`.
 
 ## Downloading ElasticSearch
 
-By default, the charm will download (and check) the elasticsearch
-debian package during the install hook but this is not ideal in
-production environments (you don't want the deploy to fail because a
-third-party site is down). For this reason, the charm provides two other
-methods for installing elasticsearch:
-
-First, you can ensure the versioned deb package as available at
-files/elasticsearch-0.90.7.deb as part of your build step, and it will not need
-to be downloaded during install. To make that easier, you can download the
-default version into
-
-    make pre-download-deb
-
-The other alternative is to ensure a relevant debian package is available
-in an archive that you've configured via the execd_preinstall in the install
-hook, and set the archive-package-name config option. This will ensure that
-no download is required either during a build phase or the install hook,
-other than from your archive.
+This charm installs elasticsearch from a configured apt repository.
+By default, this is the 1.0 repository from elasticsearch.org, but
+you can configure your own internal repo if you don't want your
+deployment to be dependent on external resources.
