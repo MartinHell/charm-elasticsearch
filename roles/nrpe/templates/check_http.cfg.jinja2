@@ -1,0 +1,2 @@
+# check http
+command[check_http]=/usr/lib/nagios/plugins/check_http -H localhost -u /_cluster/health -p 9200 -w 2 -c 3 -s green

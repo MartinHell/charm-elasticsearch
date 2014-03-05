@@ -1,4 +1,6 @@
 - hosts: localhost
+  roles:
+    - nrpe
 
   handlers:
 
