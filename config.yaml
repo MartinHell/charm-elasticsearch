@@ -1,15 +1,15 @@
 options:
-  version:
-    type: string
-    default: "0.90.7"
-    description: |
-      This sets the elasticsearch version number that will be used.
-      If you're going to plug in logstash,  make sure versions match.
   apt-repository:
     type: string
     default: "deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main"
     description: |
-      A deb-line for an extra apt archive to add to the system during install.
+      A deb-line for the apt archive which contains the elasticsearch package.
+      This is necessary until elasticsearch gets into the debian/ubuntu archives.
+  apt-key-url:
+    type: string
+    default: "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
+    description: |
+      The url for the key for the apt-repository.
   cluster-name:
     type: string
     default: "elasticsearch"

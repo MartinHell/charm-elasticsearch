@@ -13,6 +13,13 @@
 
   tasks:
 
+    - name: Add apt key.
+      tags:
+        - install
+        - upgrade-charm
+        - config-changed
+      apt_key: url={{ apt_key_url }} state=present
+
     - name: Add apt archive.
       tags:
         - install
