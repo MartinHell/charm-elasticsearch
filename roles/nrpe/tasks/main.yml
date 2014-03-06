@@ -1,19 +1,19 @@
-- name: Write nagios check_http command config.
+- name: Write nagios check command config.
   tags:
     - nrpe-external-master-relation-changed
   template:
-    src: "check_http.cfg.jinja2"
-    dest: "/etc/nagios/nrpe.d/check_http.cfg"
+    src: "check_name.cfg.jinja2"
+    dest: "/etc/nagios/nrpe.d/{{ check_name }}.cfg"
     owner: nagios
     group: nagios
     mode: 0644
 
-- name: Write nagios check_http service definition.
+- name: Write nagios check service definition for export.
   tags:
     - nrpe-external-master-relation-changed
   template:
-    src: "check_http_service_definition.cfg.jinja2"
-    dest: "/var/lib/nagios/export/service__juju-elasticsearch-0_check_http.cfg"
+    src: "check_name_service_export.cfg.jinja2"
+    dest: "/var/lib/nagios/export/service__{{ service_context }}-{{ unit_name }}_{{ check_name }}.cfg"
     owner: nagios
     group: nagios
     mode: 0644

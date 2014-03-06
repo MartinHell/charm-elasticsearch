@@ -1,5 +1,4 @@
 #---------------------------------------------------
 # This file is Juju managed
 #---------------------------------------------------
-# check http
-command[check_http]=/usr/lib/nagios/plugins/check_http -H localhost -u /_cluster/health -p 9200 -w 2 -c 3 -s green
+command[{{ check_name }}]={{ plugin_dir }}/{{ check_name }} {{ check_params }}
