@@ -39,6 +39,7 @@ def update_relations(context, namespace_separator=':'):
     if 'relations' not in context:
         context['relations'] = {}
     if relation_type is not None:
+        relation_type = relation_type.replace('-', '_')
         context['relations'][relation_type] = relations
 
 
@@ -66,7 +67,6 @@ def juju_state_to_yaml(yaml_path, namespace_separator=':',
     # file resources etc.
     config['charm_dir'] = charm_dir
     config['local_unit'] = charmhelpers.core.hookenv.local_unit()
-
 
     # Don't use non-standard tags for unicode which will not
     # work when salt uses yaml.load_safe.

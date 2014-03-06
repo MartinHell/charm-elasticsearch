@@ -11,6 +11,7 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
     default_hooks=[
         'config-changed',
         'peer-relation-joined',
+        'nrpe-external-master-relation-changed',
         'start',
         'stop',
         'upgrade-charm',
