@@ -4,8 +4,8 @@
   template:
     src: "check_http.cfg.jinja2"
     dest: "/etc/nagios/nrpe.d/check_http.cfg"
-    owner: ubunet
-    group: ubunet
+    owner: nagios
+    group: nagios
     mode: 0644
 
 - name: Write nagios check_http service definition.
@@ -14,6 +14,6 @@
   template:
     src: "check_http_service_definition.cfg.jinja2"
     dest: "/var/lib/nagios/export/service__juju-elasticsearch-0_check_http.cfg"
-    owner: ubunet
-    group: ubunet
+    owner: nagios
+    group: nagios
     mode: 0644
