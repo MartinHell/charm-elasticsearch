@@ -16,3 +16,10 @@ provides:
   nrpe-external-master:
      interface: nrpe-external-master
      scope: container
+  # The following are provided for backwards compatibility with
+  # with existing charms that relate to elasticsearch (kibana,
+  # logstash-indexer).
+  cluster:
+    interface: elasticsearch
+  rest:
+    interface: elasticsearch
