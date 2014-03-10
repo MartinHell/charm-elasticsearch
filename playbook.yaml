@@ -68,3 +68,14 @@
       service: name=elasticsearch state=stopped
       tags:
         - stop
+
+    - name: Relate the cluster name and host.
+      # Provided for backwards compatability with existing charms
+      # relating to elasticsearch (kibana, logstash-indexer).
+      tags:
+        - cluster-relation-joined
+        - rest-relation-joined
+      command: >
+        relation-set
+        cluster-name={{ cluster_name }}
+        host={{ ansible_default_ipv4.address }}
