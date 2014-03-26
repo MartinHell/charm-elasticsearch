@@ -59,6 +59,16 @@
         - Update configuration
         - Restart ElasticSearch
 
+    - name: Update configuration
+      tags:
+        - config-changed
+      template: src={{ charm_dir }}/templates/elasticsearch.yml
+                dest=/etc/elasticsearch/elasticsearch.yml
+                mode=0644
+                backup=yes
+      notify:
+        - Restart ElasticSearch
+
     - name: Start ElasticSearch
       service: name=elasticsearch state=started
       tags:
