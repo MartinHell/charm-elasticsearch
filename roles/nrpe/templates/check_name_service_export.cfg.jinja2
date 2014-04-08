@@ -3,8 +3,8 @@
 #---------------------------------------------------
 define service {
     use                             active-service
-    host_name                       {{ service_context }}-{{ unit_name }}
+    host_name                       {{ nrpe_external_master__nagios_hostname }}
     service_description             {{ service_description }}
     check_command                   check_nrpe!{{ check_name }}
-    servicegroups                   {{ service_context }}
+    servicegroups                   {{ nrpe_external_master__nagios_host_context }}
 }
