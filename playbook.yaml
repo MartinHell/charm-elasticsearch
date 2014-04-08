@@ -3,7 +3,7 @@
     - role: nrpe
       check_name: check_http
       check_params: -H localhost -u /_cluster/health -p 9200 -w 2 -c 3 -s green
-      service_context: "{{ cluster_name }}"
+      service_context: "{{ nagios_context }}"
       service_description: "Verify the cluster health is green."
 
   handlers:

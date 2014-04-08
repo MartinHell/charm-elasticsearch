@@ -1,4 +1,6 @@
-branch: lp:charm-helpers
+# The following branch is awaiting review at:
+# https://code.launchpad.net/~michael.nelson/charm-helpers/fresh-ansible-relations/+merge/214203
+branch: lp:~michael.nelson/charm-helpers/fresh-ansible-relations
 destination: hooks/charmhelpers
 include:
     - core
