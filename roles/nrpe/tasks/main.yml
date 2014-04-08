@@ -13,7 +13,7 @@
     - nrpe-external-master-relation-changed
   template:
     src: "check_name_service_export.cfg.jinja2"
-    dest: "/var/lib/nagios/export/service__{{ nrpe_external_master__nagios_hostname }}_{{ check_name }}.cfg"
+    dest: "/var/lib/nagios/export/service__{{ current_relation['nagios_hostname'] }}_{{ check_name }}.cfg"
     owner: nagios
     group: nagios
     mode: 0644
