@@ -3,9 +3,11 @@
 
 cluster.name: {{ cluster_name }}
 discovery.zen.ping.multicast.enabled: false
-{% if 'peer' in relations %}
 discovery.zen.ping.unicast.hosts:
-{% for peer in relations.peer %}
-  - {{ peer.private_address }}
+{% for reln in relations.peer.values() %}
+  {%- for unit_id, reln_data in reln.items() -%}
+    {% if unit_id != local_unit %}
+  - {{ reln_data['private-address'] }}
+    {% endif %}
+  {%- endfor -%}
 {% endfor %}
-{% endif %}

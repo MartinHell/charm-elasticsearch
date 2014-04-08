@@ -23,8 +23,12 @@ def update_relations(context, namespace_separator=':'):
     # Add any relation data prefixed with the relation type.
     relation_type = charmhelpers.core.hookenv.relation_type()
     relations = []
+    context['current_relation'] = {}
     if relation_type is not None:
         relation_data = charmhelpers.core.hookenv.relation_get()
+        context['current_relation'] = relation_data
+        # Deprecated: the following use of relation data as keys
+        # directly in the context will be removed.
         relation_data = dict(
             ("{relation_type}{namespace_separator}{key}".format(
                 relation_type=relation_type,
@@ -36,11 +40,13 @@ def update_relations(context, namespace_separator=':'):
         relations = charmhelpers.core.hookenv.relations_of_type(relation_type)
         relations = [dict_keys_without_hyphens(rel) for rel in relations]
 
-    if 'relations' not in context:
-        context['relations'] = {}
+    if 'relations_deprecated' not in context:
+        context['relations_deprecated'] = {}
     if relation_type is not None:
         relation_type = relation_type.replace('-', '_')
-        context['relations'][relation_type] = relations
+        context['relations_deprecated'][relation_type] = relations
+
+    context['relations'] = charmhelpers.core.hookenv.relations()
 
 
 def juju_state_to_yaml(yaml_path, namespace_separator=':',
@@ -67,6 +73,10 @@ def juju_state_to_yaml(yaml_path, namespace_separator=':',
     # file resources etc.
     config['charm_dir'] = charm_dir
     config['local_unit'] = charmhelpers.core.hookenv.local_unit()
+    config['unit_private_address'] = charmhelpers.core.hookenv.unit_private_ip()
+    config['unit_public_address'] = charmhelpers.core.hookenv.unit_get(
+        'public-address'
+    )
 
     # Don't use non-standard tags for unicode which will not
     # work when salt uses yaml.load_safe.
