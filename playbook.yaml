@@ -71,3 +71,13 @@
         relation-set
         cluster-name={{ cluster_name }}
         host={{ ansible_default_ipv4.address }}
+
+    - name: Communicate website details
+      # The default relation data includes private-address which is
+      # already appropriately named, we just need to include the port.
+      tags:
+        - website-relation-changed
+        - website-relation-joined
+      command: >
+        relation-set
+        port=9200

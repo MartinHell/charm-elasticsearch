@@ -14,9 +14,7 @@ options:
     type: string
     default: "elasticsearch"
     description: |
-      This sets the elasticsearch cluster name, which is used to discover
-      and auto-join other nodes. don not change this if you want
-      elasticsearch and kibana to work.
+      This sets the elasticsearch cluster name.
   install-ansible-from-ppa:
     type: boolean
     default: true
