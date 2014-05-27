@@ -1,6 +1,6 @@
 name: elasticsearch
 summary: Open Source, Distributed, RESTful, Search Engine built on Apache Lucene
-maintainer: Luis Arias <luis@balsamiq.com>, Paul Czarkowski <paul@paulcz.net>, Michael Nelson <michael.nelson@canonical.com>
+maintainer: Michael Nelson <michael.nelson@canonical.com>
 description: |
   Distributed RESTful search and analytics
   Read more at http://www.elasticsearch.org
@@ -11,15 +11,14 @@ peers:
   peer:
     interface: http
 provides:
-  website:
-    interface: http
+  rest:
+    interface: elasticsearch
+    sets: [cluster-name, host, port]
   nrpe-external-master:
      interface: nrpe-external-master
      scope: container
-  # The following are provided for backwards compatibility with
+  # The following is provided for backwards compatibility with
   # with existing charms that relate to elasticsearch (kibana,
-  # logstash-indexer).
+  # logstash-indexer) via the 'cluster' relationship.
   cluster:
-    interface: elasticsearch
-  rest:
     interface: elasticsearch

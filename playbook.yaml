@@ -12,34 +12,8 @@
 
   tasks:
 
+    - include: tasks/install-elasticsearch.yml
     - include: tasks/peer-relations.yml
-
-    - name: Add apt key.
-      tags:
-        - install
-        - upgrade-charm
-        - config-changed
-      apt_key: url={{ apt_key_url }} state=present
-      when: apt_key_url != ""
-
-    - name: Add apt archive.
-      tags:
-        - install
-        - upgrade-charm
-        - config-changed
-      apt_repository:
-        repo: "{{ apt_repository }}"
-        state: present
-      when: apt_repository != ""
-
-    - name: Install required packages.
-      apt: pkg={{ item }} state=latest update_cache=yes
-      with_items:
-        - openjdk-7-jre-headless
-        - elasticsearch
-      tags:
-        - install
-        - upgrade-charm
 
     - name: Update configuration
       tags:
@@ -62,8 +36,9 @@
         - stop
 
     - name: Relate the cluster name and host.
-      # Provided for backwards compatability with existing charms
-      # relating to elasticsearch (kibana, logstash-indexer).
+      # 'cluster' is provided for backwards compatability with existing charms
+      # relating to elasticsearch (kibana, logstash-indexer) via the 'cluster'
+      # relationship.
       tags:
         - cluster-relation-joined
         - rest-relation-joined
@@ -71,3 +46,4 @@
         relation-set
         cluster-name={{ cluster_name }}
         host={{ ansible_default_ipv4.address }}
+        port=9200
