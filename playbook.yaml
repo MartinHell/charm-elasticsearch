@@ -72,3 +72,4 @@
         relation-set
         cluster-name={{ cluster_name }}
         host={{ ansible_default_ipv4.address }}
+        port=9200
