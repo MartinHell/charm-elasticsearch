@@ -62,8 +62,9 @@
         - stop
 
     - name: Relate the cluster name and host.
-      # Provided for backwards compatability with existing charms
-      # relating to elasticsearch (kibana, logstash-indexer).
+      # 'cluster' is provided for backwards compatability with existing charms
+      # relating to elasticsearch (kibana, logstash-indexer) via the 'cluster'
+      # relationship.
       tags:
         - cluster-relation-joined
         - rest-relation-joined
@@ -71,13 +72,3 @@
         relation-set
         cluster-name={{ cluster_name }}
         host={{ ansible_default_ipv4.address }}
-
-    - name: Communicate website details
-      # The default relation data includes private-address which is
-      # already appropriately named, we just need to include the port.
-      tags:
-        - website-relation-changed
-        - website-relation-joined
-      command: >
-        relation-set
-        port=9200
