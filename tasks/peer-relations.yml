@@ -11,6 +11,13 @@
             mode=0644
             backup=yes
 
+# If multiple units are started simultaneously, peer-relation-joined
+# may be called before the service is running.
+- name: Wait until the local service is available
+  tags:
+    - peer-relation-joined
+  wait_for: port=9200
+
 - name: Record current cluster health
   tags:
     - peer-relation-joined
@@ -27,6 +34,12 @@
   tags:
     - peer-relation-joined
   wait_for: port=9200
+  when: cluster_health.json.number_of_nodes == 1
+
+- name: Pause to ensure that after restart unit has time to join.
+  tags:
+    - peer-relation-joined
+  pause: seconds=30
   when: cluster_health.json.number_of_nodes == 1
 
 - name: Record cluster health after restart
