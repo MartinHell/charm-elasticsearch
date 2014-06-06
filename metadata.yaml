@@ -11,14 +11,9 @@ peers:
   peer:
     interface: http
 provides:
-  rest:
+  client:
     interface: elasticsearch
     sets: [cluster-name, host, port]
   nrpe-external-master:
      interface: nrpe-external-master
      scope: container
-  # The following is provided for backwards compatibility with
-  # with existing charms that relate to elasticsearch (kibana,
-  # logstash-indexer) via the 'cluster' relationship.
-  cluster:
-    interface: elasticsearch
