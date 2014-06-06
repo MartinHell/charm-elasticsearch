@@ -36,12 +36,8 @@
         - stop
 
     - name: Relate the cluster name and host.
-      # 'cluster' is provided for backwards compatability with existing charms
-      # relating to elasticsearch (kibana, logstash-indexer) via the 'cluster'
-      # relationship.
       tags:
-        - cluster-relation-joined
-        - rest-relation-joined
+        - client-relation-joined
       command: >
         relation-set
         cluster-name={{ cluster_name }}

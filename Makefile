@@ -21,6 +21,6 @@ sync-charm-helpers: bin/charm_helpers_sync.py
 
 deploy:
 	@echo Deploying local elasticsearch charm
-	@juju deploy --repository=../.. local:precise/elasticsearch
+	@juju deploy --num-units=3 --repository=../.. local:precise/elasticsearch
 	@juju deploy nrpe-external-master
 	@juju add-relation nrpe-external-master elasticsearch

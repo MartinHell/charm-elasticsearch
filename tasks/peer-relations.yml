@@ -36,6 +36,12 @@
   wait_for: port=9200
   when: cluster_health.json.number_of_nodes == 1
 
+- name: Pause to ensure that after restart unit has time to join.
+  tags:
+    - peer-relation-joined
+  pause: seconds=30
+  when: cluster_health.json.number_of_nodes == 1
+
 - name: Record cluster health after restart
   tags:
     - peer-relation-joined
