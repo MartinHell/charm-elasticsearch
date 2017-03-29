@@ -34,6 +34,7 @@
 
 - name: Install elasticsearch from repository
   apt: pkg=elasticsearch state=latest update_cache=yes
+  environment: "{{ env_vars }}"
   tags:
     - install
     - upgrade-charm
@@ -41,6 +42,7 @@
 
 - name: Install ElasticSearch from payload
   command: dpkg -i {{ charm_dir }}/files/elasticsearch.deb
+  environment: "{{ env_vars }}"
   tags:
     - install
     - upgrade-charm

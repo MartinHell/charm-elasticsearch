@@ -8,8 +8,10 @@ import charmhelpers.core.host
 from charmhelpers.core import hookenv
 import os
 import shutil
+import subprocess as sp
 
 mountpoint = '/srv/elasticsearch'
+config = hookenv.config()
 
 hooks = charmhelpers.contrib.ansible.AnsibleHooks(
     playbook_path='playbook.yaml',
@@ -38,6 +40,10 @@ hooks = charmhelpers.contrib.ansible.AnsibleHooks(
 def install():
     """Install ansible before running the tasks tagged with 'install'."""
     # Allow charm users to run preinstall setup.
+    if is_container:
+        config["env-vars"] = {"ES_SKIP_SET_KERNEL_PARAMETERS": "true"}
+    else:
+        config["env-vars"] = {}
     charmhelpers.payload.execd.execd_preinstall()
     charmhelpers.contrib.ansible.install_ansible_support(
         from_ppa=False)
@@ -95,6 +101,15 @@ def migrate_to_mount(new_path):
     shutil.rmtree(old_path)
     os.symlink(new_path, old_path)
     charmhelpers.core.host.service_start('elasticsearch')
+
+
+def is_container():
+    """Return True if system is running inside a container"""
+    virt_type = sp.check_output('systemd-detect-virt').decode().strip()
+    if virt_type == 'lxc':
+        return True
+    else:
+        return False
 
 
 if __name__ == "__main__":
