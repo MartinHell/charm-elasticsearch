@@ -5,5 +5,7 @@ include:
     - fetch
     - contrib.ansible|inc=*
     - contrib.templating.contexts
+    - contrib.python
+    - contrib.charmsupport
     - payload.execd|inc=*
     - osplatform
