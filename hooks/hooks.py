@@ -57,14 +57,32 @@ def install():
         '/usr/share/ansible')
     update_nrpe_config()
 
+def install_nrpe_deps():
+    NAGIOSCHECK = { 'path': '/tmp/nagioscheck', 'url': 'https://github.com/MartinHell/pynagioscheck.git' }
+    NAGIOS_PLUGIN = { 'path': '/tmp/nagiosplugin', 'url': 'https://github.com/Boolman/nagios-plugin-elasticsearch.git' }
+    if not has_imported("Repo"):
+        try:
+            python.pip_install("gitpython")
+            from git import Repo
+        except:
+            return False
+
+    try:
+        Repo.clone_from(NAGIOSCHECK['url'], NAGIOSCHECK['path'])
+        Repo.clone_from(NAGIOS_PLUGIN['url'], NAGIOS_PLUGIN['path'])
+        sp.Popen(["python", "setup.py", "install"], cwd=NAGIOSCHECK['path'], stdout=sp.PIPE, stderr=sp.STDOUT).communicate()
+        sp.Popen(["python", "setup.py", "install"], cwd=NAGIOS_PLUGIN['path'], stdout=sp.PIPE, stderr=sp.STDOUT).communicate()
+    except:
+        return False
+
+
 @hooks.hook('nrpe-external-master-relation-joined',
             'nrpe-external-master-relation-changed')
 def update_nrpe_config():
     # python-dbus is used by check_upstart_job
-    sp.Popen(["/usr/bin/easy_install", "pip"],
-                    stdout=sp.PIPE,
-                    stderr=sp.STDOUT).communicate()
-    python.pip_install('git+https://github.com/Boolman/nagios-plugin-elasticsearch.git')
+    if not install_nrpe_deps()
+        return
+
     hostname = nrpe.get_nagios_hostname()
     current_unit = nrpe.get_nagios_unit_name()
     nrpe_setup = nrpe.NRPE(hostname=hostname)
