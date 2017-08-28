@@ -3,7 +3,7 @@
 
 import sys
 import charmhelpers.contrib.ansible
-import charmhelpers.contrib.python as python
+import charmhelpers.contrib.python.packages as python
 import charmhelpers.contrib.charmsupport.nrpe as nrpe
 import charmhelpers.payload.execd
 import charmhelpers.core.host
@@ -61,7 +61,7 @@ def install():
             'nrpe-external-master-relation-changed')
 def update_nrpe_config():
     # python-dbus is used by check_upstart_job
-    sp.Popen("/usr/local/bin/easy_install pip",
+    sp.Popen(["/usr/bin/easy_install", "pip"],
                     stdout=sp.PIPE,
                     stderr=sp.STDOUT).communicate()
     python.pip_install('git+https://github.com/Boolman/nagios-plugin-elasticsearch.git')
