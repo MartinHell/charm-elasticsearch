@@ -60,12 +60,12 @@ def install():
 def install_nrpe_deps():
     NAGIOSCHECK = { 'path': '/tmp/nagioscheck', 'url': 'https://github.com/MartinHell/pynagioscheck.git' }
     NAGIOS_PLUGIN = { 'path': '/tmp/nagiosplugin', 'url': 'https://github.com/Boolman/nagios-plugin-elasticsearch.git' }
-    if not has_imported("Repo"):
-        try:
-            python.pip_install("gitpython")
-            from git import Repo
-        except:
-            return False
+    try:
+        from git import Repo
+    except:
+        python.pip_install("gitpython")
+        from git import Repo
+
 
     try:
         Repo.clone_from(NAGIOSCHECK['url'], NAGIOSCHECK['path'])
