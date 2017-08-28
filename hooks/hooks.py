@@ -80,7 +80,7 @@ def install_nrpe_deps():
             'nrpe-external-master-relation-changed')
 def update_nrpe_config():
     # python-dbus is used by check_upstart_job
-    if not install_nrpe_deps()
+    if not install_nrpe_deps():
         return
 
     hostname = nrpe.get_nagios_hostname()
