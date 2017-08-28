@@ -3,6 +3,8 @@
 
 import sys
 import charmhelpers.contrib.ansible
+import charmhelpers.contrib.python as python
+import charmhelpers.contrib.charmsupport.nrpe as nrpe
 import charmhelpers.payload.execd
 import charmhelpers.core.host
 from charmhelpers.core import hookenv
@@ -53,7 +55,25 @@ def install():
     charmhelpers.core.host.rsync(
         'ansible_module_backports',
         '/usr/share/ansible')
+    update_nrpe_config()
 
+@hooks.hook('nrpe-external-master-relation-joined',
+            'nrpe-external-master-relation-changed')
+def update_nrpe_config():
+    # python-dbus is used by check_upstart_job
+    sp.Popen("easy_install pip",
+                    stdout=sp.PIPE,
+                    stderr=sp.STDOUT).communicate()
+    python.pip_install('git+https://github.com/Boolman/nagios-plugin-elasticsearch.git')
+    hostname = nrpe.get_nagios_hostname()
+    current_unit = nrpe.get_nagios_unit_name()
+    nrpe_setup = nrpe.NRPE(hostname=hostname)
+    nrpe_setup.add_check(
+        shortname='elasticsearch-cluster-status',
+        description='Elasticsearch cluster status check {%s}' % current_unit,
+        check_cmd=('/usr/local/bin/check-elasticsearch')
+    )
+    nrpe_setup.write()
 
 @hooks.hook('data-relation-joined', 'data-relation-changed')
 def data_relation():
