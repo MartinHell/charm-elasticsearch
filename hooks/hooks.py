@@ -61,7 +61,7 @@ def install():
             'nrpe-external-master-relation-changed')
 def update_nrpe_config():
     # python-dbus is used by check_upstart_job
-    sp.Popen("easy_install pip",
+    sp.Popen("/usr/local/bin/easy_install pip",
                     stdout=sp.PIPE,
                     stderr=sp.STDOUT).communicate()
     python.pip_install('git+https://github.com/Boolman/nagios-plugin-elasticsearch.git')
